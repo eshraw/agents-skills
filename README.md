@@ -59,17 +59,18 @@ Point your Claude client or orchestration layer at `~/.claude/skills/assumption-
 
 #### Cursor
 
-To use a **single skill** in Cursor, vendor just that skill folder into your project-level skills directory. For example:
+To install these skills in Cursor using a remote GitHub rule:
 
-```bash
-cd /path/to/your/project
-mkdir -p .cursor/skills/assumption-audit
-git clone --depth=1 https://github.com/eshane-rawat/agents-skills.git /tmp/agents-skills
-cp -R /tmp/agents-skills/product-management/assumption-audit/* .cursor/skills/assumption-audit/
-rm -rf /tmp/agents-skills
-```
+- **Open** Cursor Settings → **Rules**
+- In **Project Rules**, click **Add Rule**
+- Choose **Remote Rule (GitHub)**
+- Enter the GitHub repository URL, for example:
 
-Then configure your Cursor agent to load skills from `.cursor/skills/assumption-audit`. Use a different subfolder name when you want to add more individual skills.
+  ```text
+  https://github.com/eshraw/agents-skills
+  ```
+
+Cursor will then pull the skills from this repository according to the rule configuration. You can add additional remote rules if you want to point to other skill repos or forks.
 
 ### Using These Skills
 
