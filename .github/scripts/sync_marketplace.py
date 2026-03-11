@@ -95,10 +95,13 @@ def get_mcp_requirement(fm: dict):
     return None
 
 
+PRESERVE_IN_TARGET = {".git", "README.md", "LICENSE", ".gitignore"}
+
+
 def clear_target(target: Path):
-    """Clear target directory except .git."""
+    """Clear target directory except preserved files managed independently."""
     for item in target.iterdir():
-        if item.name == ".git":
+        if item.name in PRESERVE_IN_TARGET:
             continue
         if item.is_file():
             item.unlink()
