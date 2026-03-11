@@ -44,7 +44,18 @@ You have two main options to install a **single skill** from this repo:
 
 In all cases, replace the example paths and destination folder names with the specific skill you want (for example, `design/design-system-as-text/dsat-initialize-ds`). Restart Codex if it doesn’t pick up the new skill automatically.
 
-#### Claude
+#### Claude Code (plugin marketplace)
+
+Skills from this repo are available as installable Claude Code plugins via **[eshraw/skills-mkp](https://github.com/eshraw/skills-mkp)**, a marketplace that is automatically synced from this repo.
+
+Add the marketplace and install any skill in two commands:
+
+```bash
+claude plugin marketplace add eshraw/skills-mkp
+claude plugin install assumption-audit@agents-skills
+```
+
+#### Claude (manual)
 
 Clone the repo, then copy just the skill you want into Claude’s skills directory, e.g. for `assumption-audit`:
 
