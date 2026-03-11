@@ -1,0 +1,51 @@
+name: Sync Marketplace
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/SKILL.md"
+      - "**/SKILL.MD"
+      - "**/README.md"
+      - ".github/scripts/sync_marketplace.py"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Checkout marketplace repo
+        uses: actions/checkout@v4
+        with:
+          repository: eshraw/skills-mkp
+          token: ${{ secrets.MARKETPLACE_PAT }}
+          path: marketplace
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run sync script
+        run: python source/.github/scripts/sync_marketplace.py source marketplace
+
+      - name: Commit and push to marketplace repo
+        working-directory: marketplace
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "sync: update from agents-skills@${{ github.sha }}"
+            git push
+          fi
