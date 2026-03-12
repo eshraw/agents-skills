@@ -109,7 +109,21 @@ def clear_target(target: Path):
             shutil.rmtree(item)
 
 
+def read_existing_marketplace_name(target: Path) -> str:
+    """Read the marketplace name from the target repo's existing marketplace.json, if present."""
+    existing = target / ".claude-plugin" / "marketplace.json"
+    if existing.exists():
+        try:
+            data = json.loads(existing.read_text())
+            if "name" in data:
+                return data["name"]
+        except Exception:
+            pass
+    return MARKETPLACE_NAME
+
+
 def main():
+    marketplace_name = read_existing_marketplace_name(TARGET)
     clear_target(TARGET)
 
     plugins = []
@@ -180,7 +194,7 @@ def main():
     marketplace_meta = TARGET / ".claude-plugin"
     marketplace_meta.mkdir(parents=True, exist_ok=True)
     marketplace_json = {
-        "name": MARKETPLACE_NAME,
+        "name": marketplace_name,
         "owner": {"name": OWNER},
         "plugins": plugins,
     }

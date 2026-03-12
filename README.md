@@ -52,7 +52,7 @@ Add the marketplace and install any skill in two commands:
 
 ```bash
 claude plugin marketplace add eshraw/skills-mkp
-claude plugin install assumption-audit@agents-skills
+claude plugin install assumption-audit@skills-mkp
 ```
 
 #### Claude (manual)
